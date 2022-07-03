@@ -731,6 +731,7 @@ def iterate_over_followers(
                     continue
                 user_info_view = item.child(index=1)
                 user_name_view = user_info_view.child(index=0).child()
+
                 if not user_name_view.exists():
                     logger.info(
                         "Next item not found: probably reached end of the screen.",
@@ -738,12 +739,15 @@ def iterate_over_followers(
                     )
                     break
 
+                followed = item.child(index=2)
                 username = user_name_view.get_text()
                 screen_iterated_followers.append(username)
                 scroll_end_detector.notify_username_iterated(username)
 
                 can_interact = False
-                if storage.is_user_in_blacklist(username):
+                if followed.exists() and item.child(index=2).get_text() != "Follow":
+                    logger.info(f"@{username} already followed, skiping")
+                elif storage.is_user_in_blacklist(username):
                     logger.info(f"@{username} is in blacklist. Skip.")
                 else:
                     interacted, interacted_when = storage.check_user_was_interacted(
