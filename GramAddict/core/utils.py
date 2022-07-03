@@ -448,9 +448,11 @@ def _restore_keyboard(device):
 
 def random_sleep(inf=0.5, sup=3.0, modulable=True, log=True):
     MIN_INF = 0.3
+    MAX_INF = 2
     multiplier = float(args.speed_multiplier)
     delay = uniform(inf, sup) / (multiplier if modulable else 1.0)
     delay = max(delay, MIN_INF)
+    delay = min(delay, MAX_INF)
     if log:
         logger.debug(f"{str(delay)[:4]}s sleep")
     sleep(delay)
