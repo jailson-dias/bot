@@ -12,7 +12,8 @@
 *.pyc
 .DS_Store
 crashes
-accounts
+accounts/**/sessions.json
+accounts/**/*users.json
 !config-examples/*
 Pipfile
 Pipfile.lock
